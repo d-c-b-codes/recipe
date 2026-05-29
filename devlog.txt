@@ -1,0 +1,37 @@
+27 may 26
+
+one-sentence: 
+
+recipes is a project by which a user (simone) can easily scale up recipes
+
+we're going to try to not let scope creep happen,
+so in that vein we will put everything up front:
+
+INPUTS
+[] inputs 
+[] drop-downs for units
+[] auto-create next once one is complete
+[] delete row
+
+
+MULTIPLIER
+[] input 
+[] button
+[] auto-multiply
+
+OUTPUTS
+[] output grid
+[] "crunch" to convert units
+[] copy to clipboard
+[] 
+
+29 may 26
+
+we did all those things. here's what's on the docket:
+
+[ ] inputting mixed numbers (RIP)
+[ ] nicer formatting
+[ ] saving inputs
+[ ] choosing/deleting outputs (i.e. mixed cups/TBSP or just TBSP)
+[ ] special ingredient conversions (i.e. cups of butter to sticks of butter)
+[ ] settings (fonts & backgrounds, namely)
