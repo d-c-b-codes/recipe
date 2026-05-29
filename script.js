@@ -114,6 +114,10 @@ function generateOutputRows(){
                 class: 'output-tr'
             }) 
             outputTable.appendChild(outputRow)
+            if (outputTable.children.length % 2 == 1){
+                console.log('odd!')
+                outputRow.style.backgroundColor = 'lightgray';
+            }
 
             let name = row.children[2].children[0].value
             let notes = row.children[3].children[0].value
@@ -123,7 +127,7 @@ function generateOutputRows(){
             // numbers!
             let multiplier = handleString(multiplierInput.value)
             let amountString = oldAmount;
-            let scaledUnits;
+            let scaledUnits = '';
             // console.log(amountString)
             if (oldAmount != ''){
                 amountString = handleString(oldAmount)
@@ -144,10 +148,10 @@ function generateOutputRows(){
             outputRow.appendChild(Object.assign(doc.createElement('td'), {
                 innerHTML: `${amountString} ${unit}`,
             }))
+            outputRow.appendChild(Object.assign(doc.createElement('td'), {
+                innerHTML: scaledUnits,
+            }))
             if (scaledUnits){
-                outputRow.appendChild(Object.assign(doc.createElement('td'), {
-                    innerHTML: scaledUnits,
-                }))
             }
             // row.children[1].children[0].value = dummyAmounts[i]
             // row.children[2].children[0].children[i + 1].selected = true;

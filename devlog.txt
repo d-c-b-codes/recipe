@@ -29,9 +29,15 @@ OUTPUTS
 
 we did all those things. here's what's on the docket:
 
-[ ] inputting mixed numbers (RIP)
-[ ] nicer formatting
+[X] alternating colors for output table
 [ ] saving inputs
-[ ] choosing/deleting outputs (i.e. mixed cups/TBSP or just TBSP)
+[ ] nicer formatting
+[ ] logo :)
+[ ] change title 
 [ ] special ingredient conversions (i.e. cups of butter to sticks of butter)
 [ ] settings (fonts & backgrounds, namely)
+[ ] inputting mixed numbers (RIP)
+[ ] choosing/deleting outputs (i.e. mixed cups/TBSP or just TBSP)
+[ ] clean up code
+[ ] about page :)
+

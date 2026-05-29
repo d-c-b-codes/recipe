@@ -72,5 +72,6 @@ function scaleUnits(number, unitString){
             }
         }
     }
+    return ''
     // console.log(unitObj, relevantObjFound);
 }
