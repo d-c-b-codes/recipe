@@ -1,6 +1,4 @@
 // modules
-import {externalFunction} from "./secondary.js"
-
 import {handleString, multiplyFractions, formatFraction, reduceFraction, fractionToMixedNumber} 
 from "./numbers.js"
 
@@ -40,7 +38,6 @@ let allUnits = [
 
 // ------- ------- ------- ------- doc elements ------- ------- ------- ------- 
 const doc = document;
-const serverMessageElement = doc.getElementById('server-message');
 
 // ------- ------- ------- ------- input elements ------- ------- ------- ------- 
 const input = doc.getElementById('input-element')
@@ -63,7 +60,6 @@ copyButton.addEventListener('click', copyRecipe)
 
 // ------- ------- ------- ------- on load ------- ------- ------- ------- 
 function onLoad(){
-    externalFunction();
 
     loadDummyIngredients();
     multiplier.value = '3/4';
