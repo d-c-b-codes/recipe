@@ -30,6 +30,10 @@ let units = [
         next: 'g',
         multiple: 1000,
     },
+    {name: 'oz',
+        next: 'lb',
+        multiple: 16,
+    },
 ]
 // 
 

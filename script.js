@@ -33,6 +33,7 @@ let allUnits = [
     'g',
     'mg',
     'oz',
+    'lb',
     'fl oz',
 ]
 
@@ -45,6 +46,7 @@ const addIngredientButton = doc.getElementById('add-ingredient-btn')
 const inputTable = doc.getElementById('input-table')
 const recipeTitleInput = doc.getElementById('title-input')
 const multiplierInput = doc.getElementById('multiplier')
+const clearInputButton = doc.getElementById('clear-input-btn')
 
 // ------- ------- ------- ------- output elements ------- ------- ------- ------- 
 const outputTitle = doc.getElementById('output-title')
@@ -57,6 +59,7 @@ recipeTitleInput.addEventListener('input', changeTitle)
 multiplierInput.addEventListener('input', changeTitle)
 multiplierInput.addEventListener('input', generateOutputRows)
 copyButton.addEventListener('click', copyRecipe)
+clearInputButton.addEventListener('click', clearInputRows)
 
 // ------- ------- ------- ------- on load ------- ------- ------- ------- 
 function onLoad(){
@@ -68,11 +71,18 @@ function onLoad(){
     changeTitle();
 }
 
+function clearInputRows(){
+    console.log('clear input button pressed')
+    inputTable.innerHTML = '';
+    generateOutputRows();
+    createInputRow();
+}
+
 function loadDummyIngredients(){
-    let dummyIngredients = ['butter', 'melted butter', 'cream', 'sugar', 'its so healthy']
-    let dummyNotes = ['sifted', 'room temp', 'chilled', 'chopped', 'diced']
-    let dummyAmounts = ['3/2', '25', '7', '8', '5000']
-    for (let i = 0; i < 5; i++){
+    let dummyIngredients = ['butter', 'melted butter', 'cream', 'sugar', 'its so healthy', 'unicorn dreams']
+    let dummyNotes = ['sifted', 'room temp', 'chilled', 'chopped', 'diced', 'cowboy']
+    let dummyAmounts = ['3/2', '25', '7', '8', '5000', '60']
+    for (let i = 0; i < 6; i++){
         let row = createInputRow();
         row.children[0].children[0].value = dummyAmounts[i]
         row.children[1].children[0].children[i + 1].selected = true;
@@ -111,7 +121,6 @@ function generateOutputRows(){
             }) 
             outputTable.appendChild(outputRow)
             if (outputTable.children.length % 2 == 1){
-                console.log('odd!')
                 outputRow.style.backgroundColor = 'lightgray';
             }
 
