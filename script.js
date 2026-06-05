@@ -35,6 +35,11 @@ let allUnits = [
     'oz',
     'lb',
     'fl oz',
+    'dash',
+    'sprinkle',
+    'pinch',
+    'cowboy',
+
 ]
 
 // ------- ------- ------- ------- doc elements ------- ------- ------- ------- 
@@ -81,7 +86,7 @@ function clearInputRows(){
 function loadDummyIngredients(){
     let dummyIngredients = ['butter', 'melted butter', 'cream', 'sugar', 'its so healthy', 'unicorn dreams']
     let dummyNotes = ['sifted', 'room temp', 'chilled', 'chopped', 'diced', 'cowboy']
-    let dummyAmounts = ['3/2', '25', '7', '8', '5000', '60']
+    let dummyAmounts = ['3/2', 'dash', '7', '8', '5000', '60']
     for (let i = 0; i < 6; i++){
         let row = createInputRow();
         row.children[0].children[0].value = dummyAmounts[i]
@@ -124,13 +129,18 @@ function generateOutputRows(){
                 outputRow.style.backgroundColor = 'lightgray';
             }
 
+            let oldAmount = row.children[0].children[0].value
+            let specialCharacter = handleSpecialCharacters(row, multiplierInput.value)
+            oldAmount = row.children[0].children[0].value
+            // special characters :)) has to happen before others b/c overwrites some stuff
+
+            let multiplier = handleString(multiplierInput.value)
             let name = row.children[2].children[0].value
             let notes = row.children[3].children[0].value
-            let oldAmount = row.children[0].children[0].value
             let unit = row.children[1].children[0].value
             
+
             // numbers!
-            let multiplier = handleString(multiplierInput.value)
             let amountString = oldAmount;
             let scaledUnits = '';
             // console.log(amountString)
@@ -141,8 +151,10 @@ function generateOutputRows(){
                 let reducedFraction = reduceFraction(improperFraction)
                 let mixedNumber = fractionToMixedNumber(reducedFraction)
                 scaledUnits = scaleUnits(mixedNumber, unit)
-                amountString = formatFraction(mixedNumber)
+                amountString = `${formatFraction(mixedNumber)} ${unit}`
             }
+
+            let amountInnerHTML = specialCharacter != '' ? `${specialCharacter}` : amountString;
             
             outputRow.appendChild(Object.assign(doc.createElement('td'), {
                 innerText: name,
@@ -151,13 +163,16 @@ function generateOutputRows(){
                 innerText: notes,
             }))
             outputRow.appendChild(Object.assign(doc.createElement('td'), {
-                innerHTML: `${amountString} ${unit}`,
+                // innerHTML: `${amountString} ${unit}`,
+                innerHTML: amountInnerHTML,
             }))
             outputRow.appendChild(Object.assign(doc.createElement('td'), {
                 innerHTML: scaledUnits,
             }))
+            /*
             if (scaledUnits){
             }
+            */
             // row.children[1].children[0].value = dummyAmounts[i]
             // row.children[2].children[0].children[i + 1].selected = true;
             // console.log(outputRow)
@@ -165,6 +180,98 @@ function generateOutputRows(){
     }
 }
 
+function unhandleSpecialCharacters(character, amountInput, unitSelector){
+    if (character){
+            if (unitSelector.value != character.name){
+                let childrenToRemove = []
+                for (let opt of unitSelector.children){
+                    if (opt.value == character.name){
+                        childrenToRemove.push(opt)
+                    }
+                }
+                for (let opt of childrenToRemove){
+                    unitSelector.removeChild(opt);
+                }
+                amountInput.value = '';
+                // let option = .filter((opt) => (opt.value == character.name))[0]
+            }
+            else return '';
+        }
+}
+
+function handleSpecialCharacters(row, multiplier){
+    let castOfCharacters = [
+        {name: 'cowboy', emoji: '🤠'},
+        {name: 'pinch', emoji: 'Ԅ(≖‿≖ԅ)'},
+        {name: 'sprinkle', emoji: '✨'},
+        {name: 'dash', emoji: '🏃'},
+    ]
+
+    let unit = row.children[1].children[0]
+    let amount = row.children[0].children[0]
+    let relevantCharacter = castOfCharacters.filter((char) => 
+        (
+            /*
+            // char.name == unit.value 
+            // || 
+            */
+            char.emoji == amount.value 
+            || 
+            char.name == amount.value ))[0]
+
+    if (relevantCharacter){
+        if (relevantCharacter.name == amount.value){
+            console.log(relevantCharacter.emoji)
+                    
+            // set amount to emoji :)
+            amount.value = relevantCharacter.emoji
+
+            // set unit to relevant unit 
+            for (let opt of unit.children){
+                if (opt.value == relevantCharacter.name){
+                    opt.selected = true;
+                }
+            }
+        }
+        else { // if it's already the emoji
+            relevantCharacter.name = unit.value;
+        }
+        // (otherwise the amount string is the emoji already & we don't have to do all that)
+
+        // send relevant string to output
+        return `${multiplier} ${relevantCharacter.name} ${relevantCharacter.emoji}`
+    }
+    
+    /*
+    let alreadyFilled = castOfCharacters.filter((char) => (char.emoji == string))[0]
+    if (alreadyFilled){
+            unhandleSpecialCharacters(alreadyFilled, amountInput, unitSelector);
+            return '';
+        }
+
+    let relevantCharacter = castOfCharacters.filter((char) => 
+        (char.name == string || char.emoji == string))[0]
+    
+    if (relevantCharacter){
+        console.log(relevantCharacter.emoji)
+        // set amount to emoji :)
+        amountInput.value = relevantCharacter.emoji
+        // set unit to amount
+        
+        let newUnit = Object.assign(doc.createElement('option'), {
+            innerText: string,
+            value: string,
+            selected: true,
+        })
+        unitSelector.appendChild(newUnit)  
+        return `${multiplier} ${relevantCharacter.name} ${relevantCharacter.emoji}`
+        
+    }
+    */
+    else { // no match
+        return '';
+    }
+}
 
 
 function createInputRow(){
